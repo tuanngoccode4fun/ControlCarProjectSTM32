@@ -61,11 +61,7 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-const char * ten= "Nguyen Tuan Ngoc Hello world \r\n";
-int _write(int file, char *data, int len) {
-	HAL_UART_Transmit(&huart1, (uint8_t *)data, len, HAL_MAX_DELAY);
-	return len;
-}
+
 /* USER CODE END 0 */
 
 /**
@@ -111,7 +107,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	 // HAL_UART_Transmit(&huart1,ten, strlen(ten),100);
-	printf("Xin chao Gia Minh \r\n");
+	  printf("Hello world \r\n");
     HAL_Delay(1000);
 
   }
