@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stdio.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "stdint.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,6 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,7 +63,50 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define MOTOR_LEFT  1
+#define MOTOR_RIGHT 2
 
+#define MOTOR_DIR_CW 1
+#define MOTOR_DIR_CCW 2
+void motor_control(uint8_t which, uint8_t dir, uint8_t speed)
+{
+  printf("htim1.Instance->ARR = %ul\r\n",htim1.Instance->ARR);
+  uint16_t ccr = speed*(htim1.Instance->ARR)/100;
+  switch (which)
+  {
+  case MOTOR_LEFT:
+	  switch (dir)
+	  {
+	  	  case MOTOR_DIR_CW:
+	  	      __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, ccr);
+	  	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10,GPIO_PIN_RESET);
+	  		  break;
+	  	  case MOTOR_DIR_CCW:
+	  	      __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, htim1.Instance->ARR - ccr);
+	  	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10,GPIO_PIN_SET);
+	  	      break;
+	  }
+
+    break;
+	  case MOTOR_RIGHT:
+		  switch (dir)
+		  {
+		  	  case MOTOR_DIR_CW:
+		  	      __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, ccr);
+		  	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11,GPIO_PIN_RESET);
+		  		  break;
+		  	  case MOTOR_DIR_CCW:
+		  	      __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_2, htim1.Instance->ARR - ccr);
+		  	      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11,GPIO_PIN_SET);
+		  	      break;
+		  }
+
+	    break;
+
+  default:
+    break;
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -96,7 +141,10 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
+  motor_control(MOTOR_RIGHT, MOTOR_DIR_CW,10);
+  motor_control(MOTOR_LEFT, MOTOR_DIR_CW,10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,10 +154,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	 // HAL_UART_Transmit(&huart1,ten, strlen(ten),100);
-	  printf("Hello world \r\n");
-    HAL_Delay(1000);
 
+   // HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -212,9 +258,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 71;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
+  htim1.Init.Period = 999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -311,6 +357,8 @@ static void MX_USART1_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
@@ -327,6 +375,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
