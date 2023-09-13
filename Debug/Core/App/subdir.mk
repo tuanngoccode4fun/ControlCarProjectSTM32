@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/App/Car.c 
+../Core/App/Car.c \
+../Core/App/Ultrasonic.c 
 
 OBJS += \
-./Core/App/Car.o 
+./Core/App/Car.o \
+./Core/App/Ultrasonic.o 
 
 C_DEPS += \
-./Core/App/Car.d 
+./Core/App/Car.d \
+./Core/App/Ultrasonic.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Core/App/%.o Core/App/%.su Core/App/%.cyclo: ../Core/App/%.c Core/App/subdir.mk
 clean: clean-Core-2f-App
 
 clean-Core-2f-App:
-	-$(RM) ./Core/App/Car.cyclo ./Core/App/Car.d ./Core/App/Car.o ./Core/App/Car.su
+	-$(RM) ./Core/App/Car.cyclo ./Core/App/Car.d ./Core/App/Car.o ./Core/App/Car.su ./Core/App/Ultrasonic.cyclo ./Core/App/Ultrasonic.d ./Core/App/Ultrasonic.o ./Core/App/Ultrasonic.su
 
 .PHONY: clean-Core-2f-App
 

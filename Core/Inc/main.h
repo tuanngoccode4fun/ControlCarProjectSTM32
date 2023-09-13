@@ -59,6 +59,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define SR04_Trigger_Pin GPIO_PIN_1
+#define SR04_Trigger_GPIO_Port GPIOA
+#define SR04_Echo_Pin GPIO_PIN_2
+#define SR04_Echo_GPIO_Port GPIOA
+#define SR04_Echo_EXTI_IRQn EXTI2_IRQn
 #define NRF_CE_Pin GPIO_PIN_3
 #define NRF_CE_GPIO_Port GPIOA
 #define NRF_CS_Pin GPIO_PIN_4

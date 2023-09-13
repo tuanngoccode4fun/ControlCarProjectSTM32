@@ -1,0 +1,5 @@
+../Core/App/Ultrasonic.c:3:13:Ultrasonic_complete_callback	16	static
+../Core/App/Ultrasonic.c:10:13:Ultrasonic_start	16	static
+../Core/App/Ultrasonic.c:23:6:Ultrasonic_Ext_isr	16	static
+../Core/App/Ultrasonic.c:48:6:Ultra_handle	16	static
+../Core/App/Ultrasonic.c:93:6:Ultra_init	24	static
