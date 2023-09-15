@@ -1,6 +1,7 @@
 #ifndef __CAR_H_
 #define __CAR_H_
 #include "stdint.h"
+#include "stdio.h"
 #define CAR_DIR_FORDWARD 1
 #define CAR_DIR_BACKWARD 2
 #define CAR_DIR_LEFT	 3

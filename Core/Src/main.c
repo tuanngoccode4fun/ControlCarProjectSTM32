@@ -69,23 +69,22 @@ static void MX_TIM3_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define MAX_DIR_DISTANCE 20.0
+#define MAX_DELTA 5.0
 Ultrasonic_t SR04;
 void Ultrasonic_complete_callback(Ultrasonic_t *Ultrasonic)
 {
   if(Ultrasonic->GPIO_Pin_Echo == SR04_Echo_Pin)
   {
 		printf("[TUANNGOC] SR04_Echo_Pin = %f \r\n", Ultrasonic->distance);
-		if( Ultrasonic->distance <3.0 && Ultrasonic->distance > 0)
-		{
-			car_control(CAR_DIR_LEFT, 30);
-		}
-		else if( Ultrasonic->distance <0)
-		{
-			car_control(CAR_DIR_LEFT, 0);
-		}
-		else if(Ultrasonic->distance >3.0&& Ultrasonic->distance <5.0)
+		if( Ultrasonic->distance <MAX_DIR_DISTANCE)
 		{
 			car_control(CAR_DIR_BACKWARD, 30);
+		}
+		else if(Ultrasonic->distance >MAX_DIR_DISTANCE&& Ultrasonic->distance <(MAX_DIR_DISTANCE +MAX_DELTA) )
+		{
+			//car_control(CAR_DIR_BACKWARD, 30);
+			car_control(CAR_DIR_LEFT, 30);
 		}
 		else
 		{

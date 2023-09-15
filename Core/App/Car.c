@@ -24,18 +24,22 @@ void car_control(uint8_t dir, uint8_t speed)
 {
 	switch (dir) {
 		case CAR_DIR_FORDWARD:
+			printf("CAR_DIR_FORDWARD \r\n");
 			motor_control(&motor_left, MOTOR_DIR_CCW, speed);
 			motor_control(&motor_right, MOTOR_DIR_CCW, speed);
 			break;
 		case CAR_DIR_BACKWARD:
+			printf("CAR_DIR_BACKWARD \r\n");
 			motor_control(&motor_left, MOTOR_DIR_CW, speed);
 			motor_control(&motor_right, MOTOR_DIR_CW, speed);
 			break;
 		case CAR_DIR_LEFT:
+			printf("CAR_DIR_LEFT \r\n");
 			motor_control(&motor_left, MOTOR_DIR_CCW, speed);
 			motor_control(&motor_right, MOTOR_DIR_CCW, 0);
 			break;
 		case CAR_DIR_RIGHT:
+			printf("CAR_DIR_RIGHT \r\n");
 			motor_control(&motor_left, MOTOR_DIR_CCW, 0);
 			motor_control(&motor_right, MOTOR_DIR_CCW, speed);
 			break;
