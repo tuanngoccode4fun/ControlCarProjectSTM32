@@ -25,6 +25,8 @@
 #include "stdint.h"
 #include "Car.h"
 #include "Ultrasonic.h"
+#include "Command.h"
+#include "HC_06_Bluetooth.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -71,7 +73,9 @@ static void MX_TIM3_Init(void);
 /* USER CODE BEGIN 0 */
 #define MAX_DIR_DISTANCE 20.0
 #define MAX_DELTA 5.0
+
 Ultrasonic_t SR04;
+bluetooth_t bluetooth_HC_06;
 void Ultrasonic_complete_callback(Ultrasonic_t *Ultrasonic)
 {
   if(Ultrasonic->GPIO_Pin_Echo == SR04_Echo_Pin)
@@ -98,6 +102,21 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   {
     Ultrasonic_Ext_isr(&SR04,GPIO_Pin);
   }
+}
+void Receive_data_from_bluetooth_callback(uint8_t *data, uint8_t len)
+{
+	process_data(data, len);
+}
+void Receive_data_from_rf_callback(uint8_t *data, uint8_t len)
+{
+	process_data(data, len);
+}
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+	if(bluetooth_HC_06.huart->Instance == huart->Instance)
+	{
+	   bluetooth_handler(&bluetooth_HC_06,Size);
+	}
 }
 /* USER CODE END 0 */
 
@@ -136,7 +155,7 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   car_init();
- // car_control(CAR_DIR_FORDWARD, 30);
+  bluetooth_init(&bluetooth_HC_06, &huart1);
   Ultra_init(&SR04,&htim2,SR04_Trigger_GPIO_Port, SR04_Trigger_Pin, SR04_Echo_GPIO_Port,SR04_Echo_Pin);
   /* USER CODE END 2 */
 
@@ -148,7 +167,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-   Ultra_handle(&SR04);
+   //Ultra_handle(&SR04);
    static uint32_t toggleTimer ;
    if(SR04.ULTRA_error == true && (HAL_GetTick() -toggleTimer >= 500) )
    {
@@ -435,7 +454,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;

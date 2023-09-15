@@ -6,14 +6,20 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/App/Car.c \
+../Core/App/Command.c \
+../Core/App/HC_06_Bluetooth.c \
 ../Core/App/Ultrasonic.c 
 
 OBJS += \
 ./Core/App/Car.o \
+./Core/App/Command.o \
+./Core/App/HC_06_Bluetooth.o \
 ./Core/App/Ultrasonic.o 
 
 C_DEPS += \
 ./Core/App/Car.d \
+./Core/App/Command.d \
+./Core/App/HC_06_Bluetooth.d \
 ./Core/App/Ultrasonic.d 
 
 
@@ -24,7 +30,7 @@ Core/App/%.o Core/App/%.su Core/App/%.cyclo: ../Core/App/%.c Core/App/subdir.mk
 clean: clean-Core-2f-App
 
 clean-Core-2f-App:
-	-$(RM) ./Core/App/Car.cyclo ./Core/App/Car.d ./Core/App/Car.o ./Core/App/Car.su ./Core/App/Ultrasonic.cyclo ./Core/App/Ultrasonic.d ./Core/App/Ultrasonic.o ./Core/App/Ultrasonic.su
+	-$(RM) ./Core/App/Car.cyclo ./Core/App/Car.d ./Core/App/Car.o ./Core/App/Car.su ./Core/App/Command.cyclo ./Core/App/Command.d ./Core/App/Command.o ./Core/App/Command.su ./Core/App/HC_06_Bluetooth.cyclo ./Core/App/HC_06_Bluetooth.d ./Core/App/HC_06_Bluetooth.o ./Core/App/HC_06_Bluetooth.su ./Core/App/Ultrasonic.cyclo ./Core/App/Ultrasonic.d ./Core/App/Ultrasonic.o ./Core/App/Ultrasonic.su
 
 .PHONY: clean-Core-2f-App
 

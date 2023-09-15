@@ -1,0 +1,2 @@
+../Core/App/HC_06_Bluetooth.c:11:6:bluetooth_init	1
+../Core/App/HC_06_Bluetooth.c:17:6:bluetooth_handler	1
