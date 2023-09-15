@@ -16,7 +16,7 @@ void motor_init(Motor_t *motor,
 }
 void motor_control(Motor_t *motor, uint8_t dir, uint8_t speed)
 {
-    printf("htim1.Instance->ARR = %u\r\n", motor->htim->Instance->ARR);
+   // printf("htim1.Instance->ARR = %u\r\n", motor->htim->Instance->ARR);
     motor->speed = speed;
     motor->dir = dir;
     uint16_t ccr = speed * (motor->htim->Instance->ARR) / 100;

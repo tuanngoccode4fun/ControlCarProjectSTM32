@@ -68,6 +68,10 @@ void Error_Handler(void);
 #define NRF_CE_GPIO_Port GPIOA
 #define NRF_CS_Pin GPIO_PIN_4
 #define NRF_CS_GPIO_Port GPIOA
+#define MOTOR_LEFT_Pin GPIO_PIN_10
+#define MOTOR_LEFT_GPIO_Port GPIOA
+#define MOTOR_RIGHT_Pin GPIO_PIN_11
+#define MOTOR_RIGHT_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
